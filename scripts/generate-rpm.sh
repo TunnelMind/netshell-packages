@@ -21,7 +21,7 @@ rm rpm/stable/x86_64/netshell-*.rpm
 
 # Sign repomd.xml
 GPG_FPR=$(gpg --list-keys --with-colons packages@tunnelmind.ai | awk -F: '/^fpr/{print $10; exit}')
-gpg --batch --no-tty --pinentry-mode loopback --default-key "$GPG_FPR" \
+gpg --batch --yes --no-tty --pinentry-mode loopback --default-key "$GPG_FPR" \
   --detach-sign --armor rpm/stable/x86_64/repodata/repomd.xml
 
 echo "RPM repo updated for $VERSION"

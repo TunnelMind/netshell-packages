@@ -77,7 +77,7 @@ SHA256:
 EOF
 
 GPG_FPR=$(gpg --list-keys --with-colons packages@tunnelmind.ai | awk -F: '/^fpr/{print $10; exit}')
-GPG_OPTS="--batch --no-tty --pinentry-mode loopback --default-key $GPG_FPR"
+GPG_OPTS="--batch --yes --no-tty --pinentry-mode loopback --default-key $GPG_FPR"
 # shellcheck disable=SC2086
 gpg $GPG_OPTS --clearsign --armor \
   --output apt/dists/stable/InRelease apt/dists/stable/Release
