@@ -1,0 +1,6 @@
+[netshell]
+name=NetShell
+baseurl=https://packages.tunnelmind.ai/rpm/stable/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.tunnelmind.ai/rpm/gpg.key

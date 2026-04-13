@@ -1,0 +1,66 @@
+name: Update Package Repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+  repository_dispatch:
+    types: [new-release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_WRITE_TOKEN }}
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y apt-utils createrepo-c gnupg
+
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "${{ secrets.GPG_FINGERPRINT }}:6:" | gpg --import-ownertrust
+
+      - name: Resolve version
+        id: ver
+        run: |
+          VERSION="${{ github.event.inputs.version || github.event.client_payload.version }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "ver=${VERSION#v}" >> $GITHUB_OUTPUT
+
+      - name: Download packages
+        run: |
+          mkdir -p packages
+          VER=${{ steps.ver.outputs.ver }}
+          VERSION=${{ steps.ver.outputs.version }}
+          curl -fsSL "https://github.com/TunnelMind/netshell/releases/download/${VERSION}/netshell_${VER}_amd64.deb" \
+            -o "packages/netshell_${VER}_amd64.deb"
+          curl -fsSL "https://github.com/TunnelMind/netshell/releases/download/${VERSION}/netshell-${VER}-1.x86_64.rpm" \
+            -o "packages/netshell-${VER}-1.x86_64.rpm"
+
+      - name: Generate APT repo
+        run: bash scripts/generate-apt.sh ${{ steps.ver.outputs.version }}
+
+      - name: Generate RPM repo
+        run: bash scripts/generate-rpm.sh ${{ steps.ver.outputs.version }}
+
+      - name: Generate redirects
+        run: bash scripts/generate-redirects.sh ${{ steps.ver.outputs.version }}
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Update repos for ${{ steps.ver.outputs.version }}"
+          git push

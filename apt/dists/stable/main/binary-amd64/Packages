@@ -1,0 +1,22 @@
+Package: netshell
+Version: 1.0.0
+Architecture: amd64
+Maintainer: NetShell
+Installed-Size: 308999
+Depends: libgtk-3-0, libnotify4, libnss3, xdg-utils, libatspi2.0-0, libdrm2, libgbm1, libxcb-dri3-0, kde-cli-tools | kde-runtime | trash-cli | libglib2.0-bin | gvfs-bin, libsecret-1-0
+Recommends: pulseaudio | libasound2
+Suggests: gir1.2-gnomekeyring-1.0, libgnome-keyring0, lsb-release
+Section: utils
+Priority: optional
+Homepage: https://tunnelmind.ai/products
+Filename: pool/main/n/netshell/netshell_1.0.0_amd64.deb
+Size: 90757702
+SHA256: 02f3d289ee46b2b1def8a6727e2c053e3edc8f335170fb6c82ea7a50e8ba08cd
+SHA1: fa935c3d0e5660a8fffe0db84dabdb492d4949ca
+MD5sum: 0d9f1e2b65eb577fbc9fea0f300b5a7e
+Description: SSH/Telnet/Serial terminal for network engineers
+ Multi-tab sessions, encrypted credential vault, broadcast commands to multiple
+ devices simultaneously, compliance scanning (CIS/STIG), AI-assisted
+ troubleshooting, topology discovery via LLDP, TFTP file transfer, GitOps
+ config drift detection, and session recording with Ed25519 audit signatures.
+ Connects to SSH, Telnet, Serial, Cisco Meraki, gNMI, Kubernetes, and AWS SSM.
