@@ -2,11 +2,11 @@ Origin: NetShell
 Label: NetShell
 Suite: stable
 Codename: stable
-Version: 1.0
+Version: 1.0.0
 Architectures: amd64
 Components: main
 Description: NetShell package repository
-Date: Mon, 13 Apr 2026 00:05:47 UTC
+Date: Mon, 13 Apr 2026 00:10:55 UTC
 SHA256:
  e802f0173531a54019954d1df16af3ed28aad1cfa1fa654c390de3eae3aefff7 1132 main/binary-amd64/Packages
- eeb2747dbe2029f3865633bc4da26c4c66d8032c8813b7e848d6c1f7563a25b2 772 main/binary-amd64/Packages.gz
+ 872df96d98985b6ccf6b2a9ae7feef0e3bf7cd3fc1f050b77a49b748bf44c17c 772 main/binary-amd64/Packages.gz
