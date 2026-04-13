@@ -77,9 +77,12 @@ SHA256:
 EOF
 
 GPG_FPR=$(gpg --list-keys --with-colons packages@tunnelmind.ai | awk -F: '/^fpr/{print $10; exit}')
-gpg --default-key "$GPG_FPR" --clearsign --armor \
+GPG_OPTS="--batch --no-tty --pinentry-mode loopback --default-key $GPG_FPR"
+# shellcheck disable=SC2086
+gpg $GPG_OPTS --clearsign --armor \
   --output apt/dists/stable/InRelease apt/dists/stable/Release
-gpg --default-key "$GPG_FPR" --detach-sign --armor \
+# shellcheck disable=SC2086
+gpg $GPG_OPTS --detach-sign --armor \
   --output apt/dists/stable/Release.gpg apt/dists/stable/Release
 
 echo "APT repo updated for $VERSION"
